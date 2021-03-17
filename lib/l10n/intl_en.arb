@@ -1,0 +1,8 @@
+{
+  "@@locale": "en",
+  "splashScreenAppName": "Weather Forecast",
+  "homeScreenAppBarText": "Current Location Weather",
+  "dropdownMenuVarOne": "Hourly",
+  "dropdownMenuVarTwo": "Daily",
+  "materialAppTitle": "Weather App"
+}

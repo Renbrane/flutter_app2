@@ -1,0 +1,8 @@
+{
+  "@@locale": "ru_RU",
+  "splashScreenAppName": "Кошерный прогноз погоды",
+  "homeScreenAppBarText": "Погода в текущей локации",
+  "dropdownMenuVarOne": "По часам",
+  "dropdownMenuVarTwo": "По дням",
+  "materialAppTitle": "Прогноз погоды"
+}
