@@ -69,15 +69,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 builder: (context, state) {
                   if (state is WeatherInitialState ||
                       state is WeatherLoadingState) {
-                    return buildLoading();
+                    return loadingScreen();
                   } else if (state is WeatherErrorState) {
-                    return buildErrorUI(state.message);
+                    return errorUI(state.message);
                   } else if (state is WeatherLoadedState &&
                       dropdownValue == S.of(context).dropdownMenuVarOne) {
-                    return buildHourlyUI(state.weatherData, state.forecastData);
+                    return hourlyUI(state.weatherData, state.forecastData);
                   } else if (state is WeatherLoadedState &&
                       dropdownValue == S.of(context).dropdownMenuVarTwo) {
-                    return buildDailyUI(state.weatherData, state.forecastData);
+                    return dailyUI(state.weatherData, state.forecastData);
                   }
                 },
               ),
@@ -89,13 +89,13 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-Widget buildLoading() {
+Widget loadingScreen() {
   return Center(
     child: CircularProgressIndicator(),
   );
 }
 
-Widget buildErrorUI(String message) {
+Widget errorUI(String message) {
   return Center(
     child: Padding(
       padding: const EdgeInsets.all(8.0),
@@ -107,7 +107,7 @@ Widget buildErrorUI(String message) {
   );
 }
 
-Widget buildHourlyUI(WeatherData weatherData, ForecastData forecastData) {
+Widget hourlyUI(WeatherData weatherData, ForecastData forecastData) {
   return Center(
     child: Column(
       mainAxisSize: MainAxisSize.min,
@@ -147,7 +147,7 @@ Widget buildHourlyUI(WeatherData weatherData, ForecastData forecastData) {
   );
 }
 
-Widget buildDailyUI(WeatherData weatherData, ForecastData forecastData) {
+Widget dailyUI(WeatherData weatherData, ForecastData forecastData) {
   return Center(
     child: Column(
       mainAxisSize: MainAxisSize.min,

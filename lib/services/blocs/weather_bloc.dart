@@ -21,9 +21,13 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
         WeatherData weatherData = await apiResults.getWeatherData();
         ForecastData forecastData = await apiResults.getForecastData();
         yield WeatherLoadedState(
-            weatherData: weatherData, forecastData: forecastData);
+          weatherData: weatherData,
+          forecastData: forecastData,
+        );
       } catch (e) {
-        yield WeatherErrorState(message: e.toString());
+        yield WeatherErrorState(
+          message: e.toString(),
+        );
       }
     }
   }

@@ -10,16 +10,13 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
-  Widget build(BuildContext context) {
-    Timer(
-      Duration(seconds: 3),
-      () => Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (BuildContext context) => HomeScreen(),
-        ),
-      ),
-    );
+  void initState() {
+    super.initState();
+    Timer(Duration(seconds: 3), toHomeScreen);
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Column(
@@ -31,10 +28,19 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
               Text(
                 S.of(context).splashScreenAppName,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23.0),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 23.0,
+                ),
               )
             ]),
       ),
     );
   }
+}
+
+void toHomeScreen() {
+  MaterialPageRoute(
+    builder: (BuildContext context) => HomeScreen(),
+  );
 }

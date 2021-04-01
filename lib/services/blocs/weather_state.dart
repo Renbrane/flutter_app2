@@ -15,8 +15,8 @@ class WeatherLoadingState extends WeatherState {
 }
 
 class WeatherLoadedState extends WeatherState {
-  WeatherData weatherData;
-  ForecastData forecastData;
+  final WeatherData weatherData;
+  final ForecastData forecastData;
 
   WeatherLoadedState({this.weatherData, this.forecastData});
 
@@ -25,7 +25,7 @@ class WeatherLoadedState extends WeatherState {
 }
 
 class WeatherErrorState extends WeatherState {
-  String message;
+  final String message;
 
   WeatherErrorState({this.message});
 
