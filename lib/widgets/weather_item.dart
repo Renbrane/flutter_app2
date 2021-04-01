@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter_app2/model/weatherModel.dart';
+import 'package:flutter_app2/models/weather_model.dart';
 
 class HourlyWeatherItem extends StatelessWidget {
   final HourlyWeatherData weather;
@@ -27,6 +27,7 @@ class HourlyWeatherItem extends StatelessWidget {
     );
   }
 }
+
 class DailyWeatherItem extends StatelessWidget {
   final DailyWeatherData weather;
 

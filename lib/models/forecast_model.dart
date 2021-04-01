@@ -1,4 +1,4 @@
-import 'package:flutter_app2/model/weatherModel.dart';
+import 'package:flutter_app2/models/weather_model.dart';
 
 class ForecastData {
   final List listHourly;
@@ -9,7 +9,6 @@ class ForecastData {
   factory ForecastData.fromJson(Map<String, dynamic> json) {
     List listHourly = new List();
     List listDaily = new List();
-
 
     for (dynamic e in json['hourly']) {
       HourlyWeatherData w = new HourlyWeatherData(
