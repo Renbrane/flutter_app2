@@ -9,8 +9,8 @@ class WeatherData {
 
   factory WeatherData.fromJson(Map<String, dynamic> json) {
     return WeatherData(
-      date: new DateTime.fromMillisecondsSinceEpoch(json['dt'] * 1000,
-          isUtc: false),
+      date:
+          DateTime.fromMillisecondsSinceEpoch(json['dt'] * 1000, isUtc: false),
       name: json['name'],
       temp: json['main']['temp'].toDouble(),
       main: json['weather'][0]['main'],
@@ -29,7 +29,7 @@ class HourlyWeatherData {
 
   factory HourlyWeatherData.fromJson(Map<String, dynamic> hourly) {
     return HourlyWeatherData(
-      date: new DateTime.fromMillisecondsSinceEpoch(hourly['dt'] * 1000,
+      date: DateTime.fromMillisecondsSinceEpoch(hourly['dt'] * 1000,
           isUtc: false),
       temp: hourly['temp'].toDouble(),
       main: hourly['weather'][0]['main'],
@@ -48,8 +48,8 @@ class DailyWeatherData {
 
   factory DailyWeatherData.fromJson(Map<String, dynamic> daily) {
     return DailyWeatherData(
-      date: new DateTime.fromMillisecondsSinceEpoch(daily['dt'] * 1000,
-          isUtc: false),
+      date:
+          DateTime.fromMillisecondsSinceEpoch(daily['dt'] * 1000, isUtc: false),
       temp: daily['temp']['day'].toDouble(),
       main: daily['weather'][0]['main'],
       icon: daily['weather'][0]['icon'],
