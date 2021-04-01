@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_app2/models/forecast_model.dart';
 import 'package:flutter_app2/models/weather_model.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 
 abstract class ApiResults {
   dynamic getWeatherData();
@@ -19,12 +19,12 @@ class ApiResultsImpl implements ApiResults {
   getWeatherData() async {
     Position position = getPosition();
     if (position != null) {
-      final weatherResponse = await http.get(
+      final weatherResponse = await Dio().get(
           'https://api.openweathermap.org/data/2.5/weather?APPID=31a8c21461ac85fed5f7827a2ac45e17&lat=${position.latitude.toString()}&lon=${position.longitude.toString()}&units=metric');
 
       if (weatherResponse.statusCode == 200) {
         this.weatherData =
-            new WeatherData.fromJson(jsonDecode(weatherResponse.body));
+            new WeatherData.fromJson(jsonDecode(weatherResponse.data));
         return weatherData;
       }
     }
@@ -34,11 +34,11 @@ class ApiResultsImpl implements ApiResults {
   getForecastData() async {
     Position position = getPosition();
     if (position != null) {
-      final forecastResponse = await http.get(
+      final forecastResponse = await Dio().get(
           'https://api.openweathermap.org/data/2.5/onecall?lat=${position.latitude.toString()}&lon=${position.longitude.toString()}&APPID=31a8c21461ac85fed5f7827a2ac45e17&units=metric');
       if (forecastResponse.statusCode == 200) {
         this.forecastData =
-            new ForecastData.fromJson(jsonDecode(forecastResponse.body));
+            new ForecastData.fromJson(jsonDecode(forecastResponse.data));
         return forecastData;
       }
     }

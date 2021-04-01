@@ -28,6 +28,104 @@ class _HomeScreenState extends State<HomeScreen> {
   String dropdownValue = 'Hourly';
   @override
   Widget build(BuildContext context) {
+    Widget _buildLoadingScreen() {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
+    Widget _buildErrorUI(String message) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            message,
+            style: TextStyle(color: Colors.red),
+          ),
+        ),
+      );
+    }
+
+    Widget _buildHourlyUI(WeatherData weatherData, ForecastData forecastData) {
+      return Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: weatherData != null
+                        ? Weather(weather: weatherData)
+                        : Container(),
+                  ),
+                ],
+              ),
+            ),
+            SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  height: 200.0,
+                  child: forecastData != null
+                      ? ListView.builder(
+                          itemCount: forecastData.listHourly.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) => HourlyWeatherItem(
+                            weather: forecastData.listHourly.elementAt(index),
+                          ),
+                        )
+                      : Container(),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    Widget _buildDailyUI(WeatherData weatherData, ForecastData forecastData) {
+      return Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: weatherData != null
+                        ? Weather(weather: weatherData)
+                        : Container(),
+                  ),
+                ],
+              ),
+            ),
+            SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  height: 200.0,
+                  child: forecastData != null
+                      ? ListView.builder(
+                          itemCount: forecastData.listDaily.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) => DailyWeatherItem(
+                            weather: forecastData.listDaily.elementAt(index),
+                          ),
+                        )
+                      : Container(),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
     return MaterialApp(
       home: Builder(
         builder: (context) {
@@ -51,7 +149,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     items: <String>[
                       S.of(context).dropdownMenuVarOne,
                       S.of(context).dropdownMenuVarTwo,
-                    ].map<DropdownMenuItem<String>>((String newValue) {
+                    ].map<DropdownMenuItem<String>>((
+                      String newValue,
+                    ) {
                       return DropdownMenuItem<String>(
                         value: newValue,
                         child: Text(newValue),
@@ -69,15 +169,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 builder: (context, state) {
                   if (state is WeatherInitialState ||
                       state is WeatherLoadingState) {
-                    return loadingScreen();
+                    return _buildLoadingScreen();
                   } else if (state is WeatherErrorState) {
-                    return errorUI(state.message);
+                    return _buildErrorUI(state.message);
                   } else if (state is WeatherLoadedState &&
                       dropdownValue == S.of(context).dropdownMenuVarOne) {
-                    return hourlyUI(state.weatherData, state.forecastData);
+                    return _buildHourlyUI(
+                        state.weatherData, state.forecastData);
                   } else if (state is WeatherLoadedState &&
                       dropdownValue == S.of(context).dropdownMenuVarTwo) {
-                    return dailyUI(state.weatherData, state.forecastData);
+                    return _buildDailyUI(state.weatherData, state.forecastData);
                   }
                 },
               ),
@@ -87,102 +188,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-}
-
-Widget loadingScreen() {
-  return Center(
-    child: CircularProgressIndicator(),
-  );
-}
-
-Widget errorUI(String message) {
-  return Center(
-    child: Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Text(
-        message,
-        style: TextStyle(color: Colors.red),
-      ),
-    ),
-  );
-}
-
-Widget hourlyUI(WeatherData weatherData, ForecastData forecastData) {
-  return Center(
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: weatherData != null
-                    ? Weather(weather: weatherData)
-                    : Container(),
-              ),
-            ],
-          ),
-        ),
-        SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              height: 200.0,
-              child: forecastData != null
-                  ? ListView.builder(
-                      itemCount: forecastData.listHourly.length,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) => HourlyWeatherItem(
-                        weather: forecastData.listHourly.elementAt(index),
-                      ),
-                    )
-                  : Container(),
-            ),
-          ),
-        ),
-      ],
-    ),
-  );
-}
-
-Widget dailyUI(WeatherData weatherData, ForecastData forecastData) {
-  return Center(
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: weatherData != null
-                    ? Weather(weather: weatherData)
-                    : Container(),
-              ),
-            ],
-          ),
-        ),
-        SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              height: 200.0,
-              child: forecastData != null
-                  ? ListView.builder(
-                      itemCount: forecastData.listDaily.length,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) => DailyWeatherItem(
-                        weather: forecastData.listDaily.elementAt(index),
-                      ),
-                    )
-                  : Container(),
-            ),
-          ),
-        ),
-      ],
-    ),
-  );
 }

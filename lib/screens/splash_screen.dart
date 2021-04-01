@@ -37,10 +37,12 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
     );
   }
-}
 
-void toHomeScreen() {
-  MaterialPageRoute(
-    builder: (BuildContext context) => HomeScreen(),
-  );
+  void toHomeScreen() {
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (BuildContext context) => HomeScreen(),
+      ),
+    );
+  }
 }
